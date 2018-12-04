@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="keywords" content="edueng, english, learn english, study english, english grammar, english books">
+        <meta name="description" content="Learn English for free with EduEng">
+        <title>Test • EduEng</title>
+        <link href="style.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet">
+        <script src="script.js" async></script>
+    </head>
+    <body>
+        <header class="page-header">
+            <section class="page-header-logo">
+                <a title="To the main page" href="index.html"><img class="header-logo" src="images/logo.png" alt="Website logo" ></a>
+            </section>
+            <nav class="header-navbar">
+                <ul class="header-menu-list">
+                    <li><a href="trainings.html">Trainings</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="materials.html">Materials</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="practice.html">Practice</a></li>
+                </ul>
+            </nav>
+            <section class="header-signup">
+                <button class="signup-btn">Sign up</button>
+            </section>
+        </header>
+        <main>
+            <section class="about-section">
+                <h1>Test</h1>
+                <hr>
+                <p>Let's make EduEng great again</p>
+            </section>
+            <section class="experiment">
+                <p class="experiment-p">Actual user: Anonymous</p>
+                <button class="click-me">Click me</button>
+            </section>
+            <section class="game">
+                    <h1>Number guessing game</h1>
+
+                    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+                
+                    <div class="form">
+                      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField">
+                      <input type="submit" value="Submit guess" class="guessSubmit">
+                    </div>
+                
+                    <div class="resultParas">
+                      <p class="guesses"></p>
+                      <p class="lastResult"></p>
+                      <p class="lowOrHi"></p>
+                    </div>
+            </section>
+            <section class="signup-section">
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        <br>
+                        <label for="name-field">Name</label>
+                            <input type="text" name="name" id="name-field" required autofocus><br><br>
+                            <label for="email-field">Email</label>
+                            <input type="email" name="email" id="email-field" required><br><br>
+                            <label for="birthday-field">Birthday</label>
+                            <input type="date" name="birthday" id="birthday-field" required><br><br>
+                            <label for="password-field">Password</label>
+                            <input type="password" name="password" id="password-field" placeholder="Letters and numbers, at least 6 symbols" pattern="[0-9,A-Za-z]{6,18}" required><br><br>
+                        <label><input type="checkbox" checked> I don't want to hear from you via email</label><br>
+                        <div class="buttons">
+                            <input type="submit" value="Sign up">
+                            <input type="reset" value="Reset">
+                        </div>
+                        <input onclick="closeWindow()" type="image" src="images/close.png" />
+                    </form>
+            </section>
+        </main>
+        <footer class="page-footer">
+            <section class="copyright">
+                <p><i>&copy; 2018. All rights reserved.</i></p>
+            </section>
+            <nav class="footer-navbar">
+                <ul class="footer-menu-list">
+                    <li><a href="about.html">About us</a></li>
+                    <li><a href="jobs.html">Jobs</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </nav>
+            <section class="social-buttons">
+                <a href='https://play.google.com/store/apps/details?id=skyeng.words.prod&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img class="google-btn" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+            </section>
+        </footer>
+        <script>
+                // Your JavaScript goes
+
+
+                
+                let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+                const guesses = document.querySelector('.guesses');
+                const lastResult = document.querySelector('.lastResult');
+                const lowOrHi = document.querySelector('.lowOrHi');
+
+                const guessSubmit = document.querySelector('.guessSubmit');
+                const guessField = document.querySelector('.guessField');
+
+                let guessCount = 1;
+                let resetButton;
+                guessField.focus();
+
+                function checkGuess() {
+                let userGuess = Number(guessField.value);
+                if (guessCount === 1) {
+                    guesses.textContent = 'Previous guesses: ';
+                }
+                guesses.textContent += userGuess + ' ';
+                
+                if (userGuess === randomNumber) {
+                    lastResult.textContent = 'Congratulations! You got it right!';
+                    lastResult.style.backgroundColor = 'green';
+                    lowOrHi.textContent = '';
+                    setGameOver();
+                } else if (guessCount === 10) {
+                    lastResult.textContent = '!!!GAME OVER!!!';
+                    setGameOver();
+                } else {
+                    lastResult.textContent = 'Wrong!';
+                    lastResult.style.backgroundColor = 'red';
+                    if(userGuess < randomNumber) {
+                    lowOrHi.textContent = 'Last guess was too low!';
+                    } else if(userGuess > randomNumber) {
+                    lowOrHi.textContent = 'Last guess was too high!';
+                    }
+                }
+                
+                guessCount++;
+                guessField.value = '';
+                guessField.focus();
+                }
+
+                guessSubmit.addEventListener('click', checkGuess);
+
+                function setGameOver() {
+                guessField.disabled = true;
+                guessSubmit.disabled = true;
+                resetButton = document.createElement('button');
+                resetButton.textContent = 'Start new game';
+                document.body.appendChild(resetButton);
+                resetButton.addEventListener('click', resetGame);
+                }
+
+                function resetGame() {
+                guessCount = 1;
+
+                const resetParas = document.querySelectorAll('.resultParas p');
+                for (let i = 0 ; i < resetParas.length ; i++) {
+                    resetParas[i].textContent = '';
+                }
+
+                resetButton.parentNode.removeChild(resetButton);
+
+                guessField.disabled = false;
+                guessSubmit.disabled = false;
+                guessField.value = '';
+                guessField.focus();
+
+                lastResult.style.backgroundColor = 'white';
+
+                randomNumber = Math.floor(Math.random() * 100) + 1;
+                }
+        </script>
+    </body>
+</html>
